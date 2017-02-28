@@ -9,29 +9,42 @@
     <div draggable="true" ondragstart="handleDrag(event)">
         <p>Some content to be dragged.</p>
     </div>
-
+    <div></div>
+    <div></div>
     <div >
-        <p ondragover="handleDragOver(event)" ondrop="handleDrop(event)">AQUI</p>
+        <label draggable="true" ondragstart="handleDrag(event)">
+            Some content to be dragged.
+        </label> 
     </div>
+    <!--<div >
+        <p ondragover="handleDragOver(event)" ondrop="handleDrop(event)">AQUI</p>
+    </div>-->
     A ver si pega esto
-    <input ondragover="handleDragOver(event)" ondrop="handleDrop(event)"/>
+    <input ondragover="handleDragOver(event)" ondrop="handleDropInput(event)"/>
+    <input />
     <script type="text/javascript">
         function handleDrag(event) {
             event.dataTransfer.effectAllowed = "copy";
             
             event.dataTransfer.setData("text/plain", event.target.innerHTML);
-            var datoscapturados = event.dataTransfer.getData("text/plain");
+            
         }
     </script>
 
     <script type="text/javascript">
         function handleDragOver(event) {
-           // event.stopPropagation();
+           event.stopPropagation();
             event.preventDefault();
             event.dataTransfer.dropEffect = "copy"; // Display a "copy" cursor
         }
         function handleDrop(event) {
-           // event.stopPropagation();
+           event.stopPropagation();
+            event.preventDefault();
+            event.target.innerHTML = event.dataTransfer.getData("text/plain");
+
+        }
+        function handleDropInput(event) {
+            event.stopPropagation();
             event.preventDefault();
             event.target.value = event.dataTransfer.getData("text/plain");
 
