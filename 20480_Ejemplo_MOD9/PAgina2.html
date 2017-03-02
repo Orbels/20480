@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+</head>
+<body onload="CargarNombre()">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            document.getElementById('textoSaludo').innerHTML = "Contador:" + localStorage.getItem("Cuenta") + ", Hola " + sessionStorage.Nombre;
+        });
+        </script>
+
+    <div id="textoSaludo">
+
+    </div>
+
+    <!--<script type="text/javascript">
+
+        function CargarNombre() {
+            document.getElementById("textoSaludo").innerHtml = "Hola" + sessionStorage.getItem("Nombre");
+        };
+
+    </script>-->
+    <!--<script type="text/javascript">
+       
+        //alternative to load event
+        document.onreadystatechange = function () {
+            if (document.readyState === "complete") {
+                
+                document.getElementById('textoSaludo').innerHTML = "Hola " + sessionStorage.Nombre;
+            }
+        };
+
+
+        window.onload = function () {
+            
+            document.getElementById('textoSaludo').innerHTML = "Hola " + sessionStorage.Nombre;
+        };
+
+    </script>-->
+
+    
+</body>
+</html>
