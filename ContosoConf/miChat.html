@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <form action="#">
+        <label for="ask-question-text">Ask a question</label>
+        <input id="ask-question-text" type="text" />
+        <button type="submit" onclick="sendMessage()">Ask</button>
+    </form>
+    <ul id="respuestas">
+        <!-- Questions will be displayed here when received by the web socket. -->
+    </ul>
+
+    <script>
+        //Comprobar si soporta sockets
+        if (window.WebSocket) {
+            alert("Soporta WebSocket");
+        }
+        else {
+            alert("NO Soporta WebSocket");
+            }
+        //establecer la conexion al socket
+        var socket = new WebSocket("ws://localhost:55981/live/socket.ashx");
+        var socketState = socket.readyState;
+        switch (socketState) {
+            case 0:
+                alert("Conectando");
+                break;
+            case 1:
+                alert("Conexion establecida");
+                break;
+            case 2:
+                alert("Cerrando");
+                break;
+            case 3:
+                alert("Conexión cerrada");
+                break;
+        }
+
+        socket.onopen = function () {
+            alert("Conexion establecida");
+        };
+        function sendMessage() {
+            var message = document.getElementById("ask-question-text").value;
+            var json = JSON.stringify({ ask: message });
+            this.socket.send(json);
+        };
+
+        //socket.addEventListener("open", sendMessaage);
+
+        socket.onerror = function (e) {
+            alert("HA ocurrido un ERROR: " + e.error + " " + e.message);
+        };
+        //TODO: Recibir el mesage y mostrarlo
+        function handleTextMessage(text) {
+            //var message = JSON.parse(text);
+            message = text.valueOf();
+            
+            
+                var item = document.createElement("li");
+                item.textContent = message;
+                //Acceder a la lista y añadirle el elemento appendChild()
+                document.getElementById("respuestas").appendChild(item);
+           
+        }
+        socket.onmessage = function (event) {
+            // message has been received
+            if (event.type == "message") {
+                handleTextMessage(event.data);
+                } 
+            //else {
+            //    handlebinarymessage(socket.binarytype, event.data);
+            //}
+        };
+
+    </script>
+
+</body>
+</html>
